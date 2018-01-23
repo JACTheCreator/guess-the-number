@@ -1,0 +1,32 @@
+welcome: |
+ <speak>
+      I am thinking of a number between 1 and 10... 
+      What number am i thinking of?
+      You have three attempts.
+  </speak>
+notnumber: |
+  <speak>
+      Please say a number. Try again
+  </speak>
+outofrange: |
+  <speak> 
+      Silly! That number is not between 1 and 10.
+  </speak>
+correct: |
+  <speak>
+    <audio src='https://jacthecreator.heliohost.org/media/ding-sound-effect_2.mp3'/>
+    Yay! You got it!
+  </speak>
+wrong: |
+  <speak>
+    <audio src='https://jacthecreator.heliohost.org/media/wrong-answer-sound-effect.mp3'/>
+    Nope
+    The number you guest is {{positon}} than my number.
+    You got {{attempts}} {{attempt_word}} left
+  </speak>
+outoftries: |
+  <speak>
+      Oooooh Noooo... Your out of tries.
+      I was thinking of {{mynumber}}
+      Better luck next time.
+  </speak>
