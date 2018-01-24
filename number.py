@@ -32,12 +32,12 @@ def get_number(number):
 			speech_text = render_template('outofrange')
 			return question(speech_text)
 		elif int(number) == Global.myNumber:
-			init()
 			speech_text = render_template('correct')
+			init()
 			return statement(speech_text)
 		if Global.attempts == 1:
-			init()
 			speech_text = render_template('outoftries', mynumber = Global.myNumber)
+			init()
 			return statement(speech_text)
 		Global.attempts -= 1
 		if Global.attempts == 1:
