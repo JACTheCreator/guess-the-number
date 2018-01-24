@@ -20,14 +20,14 @@ correct: |
 wrong: |
   <speak>
     <audio src='https://jacthecreator.heliohost.org/media/wrong-answer-sound-effect.mp3'/>
-    Nope
+    Nope!
     The number you guest is {{positon}} than my number.
     You got {{attempts}} {{attempt_word}} left
   </speak>
 outoftries: |
   <speak>
       Oooooh Noooo... Your out of tries.
-      I was thinking of {{mynumber}}
+      I was thinking of {{mynumber}}.
       Better luck next time.
   </speak>
 help: |
@@ -36,9 +36,9 @@ help: |
       and then tell you to start guessing.
       You should guess one number and say it out loud.
       If the guess was high, I will inform you that your number is high. 
-      If the guess was too low, I will inform you that your number is low. 
-      You will have three (3) attempts to get the correct number. 
-      If you have run out of attempts IS will tell you the secret number.
+      If the guess was low, I will inform you that your number is low. 
+      You will have attempts to get the correct number. 
+      If you have run out of attempts I will tell you the secret number.
   </speak>
 bye: |
   <speak>
