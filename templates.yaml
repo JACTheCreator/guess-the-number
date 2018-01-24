@@ -37,7 +37,7 @@ help: |
       You should guess one number and say it out loud.
       If the guess was high, I will inform you that your number is high. 
       If the guess was low, I will inform you that your number is low. 
-      You will have attempts to get the correct number. 
+      You will have three attempts to get the correct number. 
       If you have run out of attempts I will tell you the secret number.
   </speak>
 bye: |
