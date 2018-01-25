@@ -9,46 +9,50 @@ app = Flask(__name__)
 ask = Ask(app, "/")
 logging.getLogger('flask_ask').setLevel(logging.DEBUG)
 
+myNumber = randint(1, 10)
+attempts = 3
 
 @ask.launch
 def launch():
 	init()
 	print ('#############launch#############')
-	print ('Alexa Number: ', Global.myNumber)
-	print ('My Attempts: ',Global.attempts)
+	print ('Alexa Number: ', myNumber)
+	print ('My Attempts: ', attempts)
 	print ('#################################')
 	speech_text = render_template('welcome')
 	return question(speech_text)
 
 @ask.intent('GetNumberIntent')
 def get_number(number):
+	global myNumber
+	global attempts
 	print ('#########GetNumberIntent#########')
-	print ('Alexa Number: ', Global.myNumber)
-	print ('My Attempts: ',Global.attempts)
+	print ('Alexa Number: ', myNumber)
+	print ('My Attempts: ',attempts)
 	print ('My Number: ',number)
 	print ('#################################')	
 	try:	
 		if int(number) < 1 or int(number) > 10:
 			speech_text = render_template('outofrange')
 			return question(speech_text)
-		elif int(number) == Global.myNumber:
+		elif int(number) == myNumber:
 			speech_text = render_template('correct')
 			init()
 			return statement(speech_text)
-		if Global.attempts == 1:
-			speech_text = render_template('outoftries', mynumber = Global.myNumber)
+		if attempts == 1:
+			speech_text = render_template('outoftries', mynumber = myNumber)
 			init()
 			return statement(speech_text)
-		Global.attempts -= 1
-		if Global.attempts == 1:
+		attempts -= 1
+		if attempts == 1:
 			attempt_text = 'attempt'
 		else:
 			attempt_text = 'attempts'	
-		if int(number) < Global.myNumber:
+		if int(number) < myNumber:
 			positon_text = 'lower'
 		else:
 			positon_text = 'higher'
-		speech_text = render_template('wrong', positon = positon_text, attempt_word = attempt_text, attempts = Global.attempts)
+		speech_text = render_template('wrong', positon = positon_text, attempt_word = attempt_text, attempts = attempts)
 		return question(speech_text)
 	except:
 		speech_text = render_template('notnumber')
@@ -67,16 +71,14 @@ def stop():
 	return statement(speech_text)
 
 def init():
-	Global.myNumber = randint(1, 10)
-	Global.attempts = 3
-
-class Global(object):
+	global myNumber
+	global attempts
 	myNumber = randint(1, 10)
 	attempts = 3
+
 	
 @ask.session_ended
 def session_ended():
-	init()
 	return "{}", 200
 
 
