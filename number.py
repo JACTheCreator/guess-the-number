@@ -1,5 +1,5 @@
-import logging
-import os
+# import logging
+# import os
 from random import randint
 from flask import Flask, render_template
 from flask_ask import Ask, request, session, question, statement
@@ -7,7 +7,7 @@ from flask_ask import Ask, request, session, question, statement
 
 app = Flask(__name__)
 ask = Ask(app, "/")
-logging.getLogger('flask_ask').setLevel(logging.DEBUG)
+# logging.getLogger('flask_ask').setLevel(logging.DEBUG)
 
 myNumber = randint(1, 10)
 attempts = 3
@@ -83,8 +83,9 @@ def session_ended():
 
 
 if __name__ == '__main__':
-    if 'ASK_VERIFY_REQUESTS' in os.environ:
-        verify = str(os.environ.get('ASK_VERIFY_REQUESTS', '')).lower()
-        if verify == 'false':
-            app.config['ASK_VERIFY_REQUESTS'] = False
-    app.run(debug=True)
+    # if 'ASK_VERIFY_REQUESTS' in os.environ:
+    #     verify = str(os.environ.get('ASK_VERIFY_REQUESTS', '')).lower()
+    #     if verify == 'false':
+    #         app.config['ASK_VERIFY_REQUESTS'] = False
+    # app.run(debug=True)
+    app.run()
