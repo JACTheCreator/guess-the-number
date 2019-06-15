@@ -16,5 +16,5 @@ class HelpIntentHandler(AbstractRequestHandler):
 
         # Giving the user help
         speech_text = say.help()
-        handler_input.response_builder.speak(speech_text)
+        handler_input.response_builder.speak(speech_text).set_should_end_session(False)
         return handler_input.response_builder.response
