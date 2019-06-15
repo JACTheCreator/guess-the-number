@@ -1,0 +1,29 @@
+LAUNCH_REQUEST = 'LaunchRequest'
+
+GET_GUESS_ALEXA_NUMBER_INTENT = 'GetGuessAlexaNumberIntent'
+
+GET_GUESS_MY_NUMBER_INTENT = 'GetGuessMyNumberIntent'
+
+GET_ATTEMPTS_INTENT = 'GetAttemptsIntent'
+
+GET_RANGE_INTENT = 'GetRangeIntent'
+
+GET_HIGHER_INTENT = 'GetHigherIntent'
+
+GET_LOWER_INTENT = 'GetLowerIntent'
+
+GET_NUMBER_INTENT = 'GetNumberIntent'
+
+GET_USER_GUESS_INTENT = 'GetUserGuessIntent'
+
+AMAZON_YES_INTENT = 'AMAZON.YesIntent'
+
+AMAZON_NO_INTENT = 'AMAZON.NoIntent'
+
+AMAZON_HELP_INTENT = 'AMAZON.HelpIntent'
+
+AMAZON_CANCEL_INTENT = 'AMAZON.CancelIntent'
+
+AMAZON_STOP_INTENT = 'AMAZON.StopIntent'
+
+SESSION_ENDED_REQUEST = 'SessionEndedRequest'
