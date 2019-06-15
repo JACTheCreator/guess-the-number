@@ -1,3 +1,4 @@
 flask_ask_sdk==0.1.1
 ask_sdk_core==1.9.0
 Flask==1.0.3
+gunicorn==19.9.0
