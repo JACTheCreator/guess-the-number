@@ -3,7 +3,7 @@ from ask_sdk_core.utils import is_intent_name
 
 from utils.say import say
 from utils.guess_the_number import guess_your_number
-from utils.common import set_next_intent, is_next_intent_error, handle_next_intent_error
+from utils.common import set_next_intent, is_next_intent_error, handle_next_intent_error, set_prev_msg
 
 from constants.intents import (GET_HIGHER_INTENT, GET_LOWER_INTENT,
                                AMAZON_YES_INTENT, AMAZON_NO_INTENT,
@@ -54,5 +54,6 @@ class GetLowerorHigherIntentHandler(AbstractRequestHandler):
         
         # Speaking to the user
         reprompt_text = say.didnothear() + speech_text
+        set_prev_msg(handler_input, msg = speech_text)
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
         return handler_input.response_builder.response

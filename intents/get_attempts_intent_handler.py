@@ -2,7 +2,8 @@ from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_intent_name
 
 from utils.say import say
-from utils.common import set_next_intent, is_next_intent_error, handle_next_intent_error
+from utils.common import (set_next_intent, is_next_intent_error, 
+                         handle_next_intent_error, set_prev_msg)
 
 from constants.intents import (GET_ATTEMPTS_INTENT,
                                GET_RANGE_INTENT)
@@ -31,17 +32,7 @@ class GetAttemptsIntentHandler(AbstractRequestHandler):
 
             # Reprompt user on number of attempts
             speech_text = say.notnumber() + say.getattempts()
-            handler_input.response_builder.speak(speech_text).set_should_end_session(False)
-            return handler_input.response_builder.response
-
-        # Validing the attempts the user gives.
-        if not attempts:
-            # Setting the next intent.
-            set_next_intent(handler_input = handler_input, 
-                            next_intent = [GET_ATTEMPTS_INTENT, GET_NUMBER_INTENT])
-            
-            # Asks the user to provide a valid input.
-            speech_text = say.notnumber() + say.getattempts()
+            set_prev_msg(handler_input, msg = say.getattempts())
             handler_input.response_builder.speak(speech_text).set_should_end_session(False)
             return handler_input.response_builder.response
 
@@ -58,5 +49,6 @@ class GetAttemptsIntentHandler(AbstractRequestHandler):
         # Asking the user the range of the numbers in a game. 
         speech_text = say.getrange()
         reprompt_text = say.didnothear() + speech_text
+        set_prev_msg(handler_input, msg = speech_text)
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
         return handler_input.response_builder.response

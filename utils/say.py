@@ -88,7 +88,7 @@ class say(object):
 		"""
 
 
-	def help():
+	def help(prev_msg):
 		return """
 			This game contains two modes. In both modes, alexa will ask
 			for the amount of attempts needed, and the guessing range. The value for 
@@ -96,8 +96,8 @@ class say(object):
 			should be positive. An example of this 1 to 10 or, 1 to 15. 
 			In the first mode, I will attempt to guess the number 
 			that you are thinking of. In the second mode, you can attempt 
-			to guess the number I am thinking of.
-		"""
+			to guess the number I am thinking of. I will now continue from where I left off.
+		""" + prev_msg
 
 
 	def bye():

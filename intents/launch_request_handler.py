@@ -2,7 +2,7 @@ from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.utils import is_request_type
 
 from utils.say import say
-from utils.common import set_next_intent
+from utils.common import set_next_intent, set_prev_msg
 
 from constants.intents import (LAUNCH_REQUEST, 
                                GET_GUESS_ALEXA_NUMBER_INTENT, 
@@ -26,5 +26,6 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # Welcoming the user.
         speech_text = say.welcome()
         reprompt_text = say.didnothear() + speech_text
+        set_prev_msg(handler_input, msg = 'What mode would you like to play?')
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)        
         return handler_input.response_builder.response

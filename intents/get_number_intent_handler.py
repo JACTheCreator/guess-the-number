@@ -4,7 +4,7 @@ from ask_sdk_core.utils import is_intent_name
 from utils.convert_to_ordinal_number import convert_to_ordinal_number
 from utils.say import say
 from utils.common import (set_next_intent, is_next_intent_error, 
-                          handle_next_intent_error, is_prev_intent)
+                          handle_next_intent_error, is_prev_intent, set_prev_msg)
 from utils.guess_the_number import guess_alexa_number
 
 from constants.mode import GUESS_ALEXA_NUMBER, GUESS_MY_NUMBER
@@ -50,6 +50,7 @@ class GetNumberIntentHandler(AbstractRequestHandler):
                 # Reprompt user on number of attempts
                 speech_text = say.notnumber() + say.getattempts()
                 reprompt_text = say.didnothear() + speech_text
+                set_prev_msg(handler_input, msg = say.getattempts())
                 handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
                 return handler_input.response_builder.response
             
@@ -63,6 +64,7 @@ class GetNumberIntentHandler(AbstractRequestHandler):
             # Asking the user the range of the numbers in a game. 
             speech_text = say.getrange()
             reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = speech_text)
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
             return handler_input.response_builder.response
 
@@ -90,6 +92,7 @@ class GetNumberIntentHandler(AbstractRequestHandler):
                                     next_intent = [GET_NUMBER_INTENT])      
                     speech_text = say.notnumber() + say.numberthinkingof()
                     reprompt_text = say.didnothear() + speech_text
+                    set_prev_msg(handler_input, msg = speech_text)                    
                     handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
                     return handler_input.response_builder.response
 
@@ -101,6 +104,7 @@ class GetNumberIntentHandler(AbstractRequestHandler):
                     ordinal_number = convert_to_ordinal_number(alexa_guesses.index(user_number) + 1)
                     speech_text = ('Hey I guessed {} already on my {} attempt '.format(user_number, ordinal_number) +
                                    'Do you want a rematch?')
+                    set_prev_msg(handler_input, msg = 'Do you want a rematch?')
                     reprompt_text = say.didnothear() + speech_text
                     handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)                    
                     return handler_input.response_builder.response
@@ -108,5 +112,6 @@ class GetNumberIntentHandler(AbstractRequestHandler):
                 speech_text = ('Oh I see! I will get you next time!' + 
                                'Do you want a rematch?')
                 reprompt_text = say.didnothear() + speech_text
+                set_prev_msg(handler_input, msg = 'Do you want a rematch?')
                 handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)          
                 return handler_input.response_builder.response

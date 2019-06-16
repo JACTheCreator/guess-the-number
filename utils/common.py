@@ -57,3 +57,13 @@ def set_game_state(handler_input, state):
 def is_current_game_state(handler_input, state):
     """Check the current game state"""
     return handler_input.attributes_manager.session_attributes['game_state'] == state
+
+
+def set_prev_msg(handler_input, msg):
+    """Setting a previous spoken message that will aid in the help intent."""
+    handler_input.attributes_manager.session_attributes['prev_msg'] = msg
+
+
+def get_prev_msg(handler_input):
+    """Getting the previous spoken message that will aid in the help intent."""
+    return handler_input.attributes_manager.session_attributes['prev_msg']

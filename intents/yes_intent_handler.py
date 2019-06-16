@@ -7,7 +7,7 @@ from utils.say import say
 from utils.guess_the_number import guess_your_number
 from utils.common import (set_next_intent, is_next_intent_error, 
                           handle_next_intent_error, is_prev_intent, 
-                          set_game_state, is_current_game_state)
+                          set_game_state, is_current_game_state, set_prev_msg)
 
 from constants.mode import GUESS_ALEXA_NUMBER, GUESS_MY_NUMBER
 from constants.game_state import GAME_IN_PROGRESS, GAME_RESTARTED 
@@ -47,6 +47,7 @@ class YesIntentHandler(AbstractRequestHandler):
 
             speech_text = 'Yay! Do you want a rematch?'
             reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = 'Do you want a rematch?')
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
             return handler_input.response_builder.response 
 
@@ -64,6 +65,7 @@ class YesIntentHandler(AbstractRequestHandler):
                 
                 speech_text = say.guessalexanumber(min = min, max = max, attempts = attempts)
                 reprompt_text = say.didnothear() + speech_text
+                set_prev_msg(handler_input, msg = speech_text)
                 handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
                 return handler_input.response_builder.response
 
@@ -75,12 +77,12 @@ class YesIntentHandler(AbstractRequestHandler):
                 session_attr['position'] = ''
                 session_attr['alexa_guesses'] = []
                
-
                 alexa_guess = guess_your_number(handler_input = handler_input)
 
                 speech_text = (say.guessyournumberprompt(attempts = attempts, min = min, max = max) +
                                say.guessyournumber(alexa_guess = alexa_guess))
 
                 reprompt_text = say.didnothear() + speech_text
+                set_prev_msg(handler_input, msg = 'What mode would you like to play?')
                 handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
                 return handler_input.response_builder.response

@@ -5,7 +5,7 @@ from random import randint
 
 from utils.say import say
 from utils.guess_the_number import guess_your_number
-from utils.common import set_next_intent, is_next_intent_error, handle_next_intent_error
+from utils.common import set_next_intent, is_next_intent_error, handle_next_intent_error, set_prev_msg
 
 from constants.mode import GUESS_ALEXA_NUMBER, GUESS_MY_NUMBER
 from constants.game_state import GAME_IN_PROGRESS
@@ -28,8 +28,11 @@ class GetRangeIntentHandler(AbstractRequestHandler):
         max = handler_input.request_envelope.request.intent.slots["max"].value
 
         if not min or not max:
+            set_next_intent(handler_input = handler_input, 
+                            next_intent = [GET_RANGE_INTENT])            
             speech_text =  "You said an invalid range. An example of a valid range is 1 to 10. Please try again. " + say.getattempts()
             reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = say.getrange())
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)            
             return handler_input.response_builder.response
 
@@ -50,6 +53,7 @@ class GetRangeIntentHandler(AbstractRequestHandler):
             
             speech_text = say.guessalexanumber(min = min, max = max, attempts = attempts)
             reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = speech_text)
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)            
             return handler_input.response_builder.response
 
@@ -68,5 +72,6 @@ class GetRangeIntentHandler(AbstractRequestHandler):
                            say.guessyournumber(alexa_guess = alexa_guess))
 
             reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = speech_text)
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False) 
             return handler_input.response_builder.response      

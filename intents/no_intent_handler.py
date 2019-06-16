@@ -4,7 +4,7 @@ from ask_sdk_core.utils import is_intent_name
 from utils.say import say
 from utils.common import (set_next_intent, is_next_intent_error, 
                           handle_next_intent_error, is_prev_intent, 
-                          set_game_state, is_current_game_state)
+                          set_game_state, is_current_game_state, set_prev_msg)
 
 from constants.game_state import GAME_IN_PROGRESS, GAME_RESTARTED 
 from constants.game_state import GAME_IN_PROGRESS, GAME_NOT_IN_PROGRESS
@@ -48,6 +48,7 @@ class NoIntentHandler(AbstractRequestHandler):
 
             speech_text = 'What mode would you like to play?'
             reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = speech_text)
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
             return handler_input.response_builder.response
 
@@ -60,6 +61,7 @@ class NoIntentHandler(AbstractRequestHandler):
                 set_next_intent(handler_input = handler_input, 
                             next_intent = [GET_NUMBER_INTENT])
                 speech_text = 'What number were you thinking of?'
+                set_prev_msg(handler_input, msg = speech_text)
                 reprompt_text = say.didnothear() + speech_text
                 handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
                 return handler_input.response_builder.response            
@@ -71,6 +73,7 @@ class NoIntentHandler(AbstractRequestHandler):
             set_game_state(handler_input, state = GAME_IN_PROGRESS)
 
             speech_text = 'Should I go lower or higher?'
+            set_prev_msg(handler_input, msg = speech_text)
             reprompt_text = say.didnothear() + speech_text
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
             return handler_input.response_builder.response
