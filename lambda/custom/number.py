@@ -2,8 +2,6 @@ from flask import Flask
 from flask_ask_sdk.skill_adapter import SkillAdapter
 from ask_sdk_core.skill_builder import SkillBuilder
 
-from constants.skill_id import skill_id
-
 from intents.launch_request_handler import LaunchRequestHandler
 from intents.get_guess_alexa_number_or_my_number_intent_handler import GetGuessAlexaNumberorGetGuessMyNumberIntentHandler
 from intents.get_attempts_intent_handler import GetAttemptsIntentHandler
@@ -21,6 +19,7 @@ from intents.catch_all_exception_handler import CatchAllExceptionHandler
 
 sb = SkillBuilder()
 
+# Register intent handlers
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(GetGuessAlexaNumberorGetGuessMyNumberIntentHandler())
 sb.add_request_handler(GetAttemptsIntentHandler())
@@ -34,15 +33,8 @@ sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
 
+# Register exception handlers
 sb.add_exception_handler(CatchAllExceptionHandler())
 
-
-app = Flask(__name__)
-skill_response = SkillAdapter(skill = sb.create(), 
-                              skill_id = skill_id, 
-                              app = app)
-
-skill_response.register(app = app, route = "/")
-
-if __name__ == '__main__':
-    app.run(threaded = True)
+# Handler name that is used on AWS lambda
+lambda_handler = sb.lambda_handler()
