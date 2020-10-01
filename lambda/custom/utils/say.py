@@ -7,6 +7,7 @@ from constants.intents import (LAUNCH_REQUEST, GET_GUESS_ALEXA_NUMBER_INTENT,
                                AMAZON_STOP_INTENT, SESSION_ENDED_REQUEST, GET_USER_GUESS_INTENT) 
 
 class say(object):
+	@staticmethod
 	def welcome():
 		return """
 			Welcome to Guess the number. I have two modes. 
@@ -17,16 +18,19 @@ class say(object):
     		If you need any assistance, just say help.
 	  	"""
 
+	@staticmethod
 	def getrange():
 		return """ 
     		What is the guessing range of the numbers in this game? An example is 1 to 10.
   		"""
 
+	@staticmethod
 	def getattempts():
   		return """
     		How many attempts are needed in this game?
   		"""
 
+	@staticmethod
 	def guessalexanumber(min, max, attempts):
 		return """
 			I am thinking of a number between {} and {}! 
@@ -35,37 +39,38 @@ class say(object):
 			Go!
 		""".format(min, max, attempts)
 
-
+	@staticmethod
 	def guessyournumberprompt(attempts , min , max):
 		return """
 			I will use {} attempts to guess the number that you are thinking of.
 			Your number is between {} and {}. I will go now! 
 		""".format(attempts, min, max)
 
-
+	@staticmethod
 	def guessyournumber(alexa_guess):
 		return """
 			Are you thinking of {}?
 		""".format(alexa_guess)
 
-
+	@staticmethod
 	def notnumber():
 		return """
 	    	Please say a number. Try again.
 	  	"""
 
-
+	@staticmethod
 	def outofrange(min, max):
 		return """
 			Silly! That number is not between {} and {}.
 		""".format(min, max)
 
-
+	@staticmethod
 	def correct():
 		return """
 			Yay! You got it!
 		"""
 
+	@staticmethod
 	def wrong(guessed_number, positon, attempts, attempt_word):
 		return """
 			Nope!
@@ -74,20 +79,21 @@ class say(object):
 			You got {} {} left
 		""".format(guessed_number, positon[0], positon[1], attempts, attempt_word)
 
-
+	@staticmethod
 	def outoftries(alexa_number):
 		return """
 			You are out of tries!
 			I was thinking of {}.
 			Better luck next time.
 		""".format(alexa_number)
-
+	
+	@staticmethod
 	def didnothear():
 		return """
 			I did not get that. 
 		"""
 
-
+	@staticmethod
 	def help(prev_msg):
 		return """
 			This game contains two modes. In both modes, alexa will ask
@@ -99,30 +105,31 @@ class say(object):
 			to guess the number I am thinking of. I will now continue from where I left off.
 		""" + prev_msg
 
-
+	@staticmethod
 	def bye():
 		return """
 			GoodBye
 		"""
 
-
+	@staticmethod
 	def exceptionerror():
 		return """
 			Sorry, there was some problem. Please try again Later!!
 		"""
 
+	@staticmethod
 	def unabletoguess():
 		return """
 			This is weird! I am unable to guess another number!
 		"""
 
-
+	@staticmethod
 	def numberthinkingof():
 		return """
 			What number were you thinking of?
 		"""
 
-
+	@staticmethod
 	def next_intent_error_handle(intent, handler_input):
 		invalid_speech = 'Silly! That is not right! I was expecting you to tell me'
 		
