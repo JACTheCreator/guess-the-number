@@ -8,7 +8,7 @@ from utils.common import (set_next_intent, is_next_intent_error,
 from utils.guess_the_number import guess_alexa_number
 
 from constants.mode import GUESS_ALEXA_NUMBER, GUESS_MY_NUMBER
-from constants.intents import (GET_USER_GUESS_INTENT, GET_NUMBER_INTENT, 
+from constants.intents import (GET_USER_GUESS_INTENT, GET_NUMBER_INTENT, GET_ATTEMPTS_INTENT, 
                                GET_RANGE_INTENT, GET_GUESS_ALEXA_NUMBER_INTENT,
                                GET_GUESS_MY_NUMBER_INTENT, AMAZON_YES_INTENT,
                                AMAZON_NO_INTENT, GET_HIGHER_INTENT, GET_LOWER_INTENT)
@@ -68,7 +68,7 @@ class GetNumberIntentHandler(AbstractRequestHandler):
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
             return handler_input.response_builder.response
 
-        elif is_prev_user_guess_intent or is_prev_range_intent:
+        if is_prev_user_guess_intent or is_prev_range_intent:
             # Setting the next intent.
             set_next_intent(handler_input = handler_input, 
                             next_intent = [GET_USER_GUESS_INTENT, GET_NUMBER_INTENT])
