@@ -30,6 +30,7 @@ class NoIntentHandler(AbstractRequestHandler):
 
         is_prev_low_high_intent = is_prev_intent(handler_input, intents = [GET_LOWER_INTENT, GET_HIGHER_INTENT])
         is_prev_range_intent = is_prev_intent(handler_input, intents = [GET_RANGE_INTENT])
+        is_guess_my_number_intent = is_prev_intent(handler_input, intents = [GET_GUESS_MY_NUMBER_INTENT])
         is_prev_yes_no_intent = is_prev_intent(handler_input, intents = [AMAZON_YES_INTENT, AMAZON_NO_INTENT])
         is_prev_number_intent = is_prev_intent(handler_input, intents = [GET_NUMBER_INTENT])
         is_prev_user_guess_number_intent = is_prev_intent(handler_input, intents = [GET_USER_GUESS_INTENT, GET_NUMBER_INTENT])
@@ -38,21 +39,7 @@ class NoIntentHandler(AbstractRequestHandler):
                                 is_current_game_state(handler_input, state = GAME_RESTARTED)) and 
                                 is_prev_yes_no_intent)
 
-        if is_prev_yes_no_intent or is_prev_number_intent or is_prev_user_guess_number_intent:
-            # Setting the next intent.
-            set_next_intent(handler_input = handler_input, 
-                            next_intent = [GET_GUESS_ALEXA_NUMBER_INTENT, 
-                                           GET_GUESS_MY_NUMBER_INTENT])
-            
-            set_game_state(handler_input, state = GAME_NOT_IN_PROGRESS)
-
-            speech_text = 'What mode would you like to play?'
-            reprompt_text = say.didnothear() + speech_text
-            set_prev_msg(handler_input, msg = speech_text)
-            handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
-            return handler_input.response_builder.response
-
-        elif is_prev_low_high_intent or is_prev_range_intent or is_game_in_progress:
+        if is_prev_low_high_intent or is_guess_my_number_intent or is_game_in_progress:
             # Getting session attributes.
             session_attr = handler_input.attributes_manager.session_attributes
 
@@ -77,5 +64,18 @@ class NoIntentHandler(AbstractRequestHandler):
             reprompt_text = say.didnothear() + speech_text
             handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
             return handler_input.response_builder.response
+        
+        elif is_prev_yes_no_intent or is_prev_number_intent or is_prev_user_guess_number_intent:
+            # Setting the next intent.
+            set_next_intent(handler_input = handler_input, 
+                            next_intent = [GET_GUESS_ALEXA_NUMBER_INTENT, 
+                                           GET_GUESS_MY_NUMBER_INTENT])
+            
+            set_game_state(handler_input, state = GAME_NOT_IN_PROGRESS)
 
+            speech_text = 'What mode would you like to play?'
+            reprompt_text = say.didnothear() + speech_text
+            set_prev_msg(handler_input, msg = speech_text)
+            handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
+            return handler_input.response_builder.response
         
