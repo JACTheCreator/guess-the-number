@@ -67,13 +67,14 @@ def guess_alexa_number(handler_input):
     guessed_number = handler_input.request_envelope.request.intent.slots["number"].value
     if not guessed_number:
         speech_text = say.notnumber()
+        reprompt_text = say.didnothear() + speech_text
         set_prev_msg(handler_input, msg = speech_text)
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
         return handler_input.response_builder.response
 
 
-    if int(guessed_number) < 1 or int(guessed_number) > 10:
-        speech_text = say.outofrange(min = 1, max = 10)
+    if int(guessed_number) < min or int(guessed_number) > max:
+        speech_text = say.outofrange(min = min, max = max)
         set_prev_msg(handler_input, msg = speech_text)
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
         return handler_input.response_builder.response
@@ -94,6 +95,7 @@ def guess_alexa_number(handler_input):
         set_next_intent(handler_input,
                         next_intent = [AMAZON_YES_INTENT, AMAZON_NO_INTENT])
         speech_text = say.outoftries(alexa_number = alexa_number) + 'Do you want a rematch?'
+        reprompt_text = say.didnothear() + speech_text
         set_prev_msg(handler_input, msg = 'Do you want a rematch?')
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
         return handler_input.response_builder.response
