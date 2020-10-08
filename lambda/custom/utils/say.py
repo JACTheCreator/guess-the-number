@@ -12,8 +12,8 @@ class say(object):
 		return """
 			Welcome to Guess the number. I have two modes. 
 			In the first mode, I will attempt to guess the number 
-			that you are thinking of. In the second mode, you can attempt 
-			to guess the number I am thinking of. What mode would you like
+			that you are thinking of... In the second mode, you can attempt 
+			to guess the number I am thinking of... What mode would you like
 			to play.
     		If you need any assistance, just say help.
 	  	"""
@@ -96,10 +96,10 @@ class say(object):
 	@staticmethod
 	def help(prev_msg):
 		return """
-			This game contains two modes. In both modes, alexa will ask
+			This game contains two modes. In both modes, I will ask
 			for the amount of attempts needed, and the guessing range. The value for 
 			the attempts should be greater than 0. The numbers used for the guessing range 
-			should be positive. An example of this 1 to 10 or, 1 to 15. 
+			should be positive. An example of this is 1 to 10. 
 			In the first mode, I will attempt to guess the number 
 			that you are thinking of. In the second mode, you can attempt 
 			to guess the number I am thinking of. I will now continue from where I left off.
@@ -169,7 +169,7 @@ class say(object):
 		if set(intent) == set([GET_HIGHER_INTENT, GET_LOWER_INTENT]):
 			alexa_guess = handler_input.attributes_manager.session_attributes['alexa_guesses'][-1]
 			return invalid_speech + """
-			To go High or Low! Is your number higher or lower that {} 
+			To go Higher or Lower! Is your number higher or lower that {} 
 			""".format(alexa_guess)
 		
 		if set(intent) == set([GET_NUMBER_INTENT, GET_USER_GUESS_INTENT]):
