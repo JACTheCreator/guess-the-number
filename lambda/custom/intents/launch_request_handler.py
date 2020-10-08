@@ -25,7 +25,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
        
         # Welcoming the user.
         speech_text = say.welcome()
-        reprompt_text = say.didnothear() + speech_text
+        reprompt_text = say.didnothear() + 'Just say, "guess alexa\'s number", if you want to guess alexa\'s number... or say "guess my number" if you want me to guess your number. ' + 'What mode would you like to play?'
         set_prev_msg(handler_input, msg = 'What mode would you like to play?')
         handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)        
         return handler_input.response_builder.response
