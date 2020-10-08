@@ -1,11 +1,24 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "hello world",
+            "invocationName": "guess the number",
+            "modelConfiguration": {
+                "fallbackIntentSensitivity": {
+                    "level": "LOW"
+                }
+            },
             "intents": [
                 {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
+                    "name": "GetNumberIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{number}"
+                    ]
                 },
                 {
                     "name": "AMAZON.HelpIntent",
@@ -16,25 +29,110 @@
                     "samples": []
                 },
                 {
-                    "name": "HelloWorldIntent",
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetGuessAlexaNumberIntent",
                     "slots": [],
                     "samples": [
-                        "hello",
-                        "how are you",
-                        "say hi world",
-                        "say hi",
-                        "hi",
-                        "say hello world",
-                        "say hello"
+                        "second mode",
+                        "second",
+                        "guess your number",
+                        "guess the number you are thinking of"
+                    ]
+                },
+                {
+                    "name": "GetGuessMyNumberIntent",
+                    "slots": [],
+                    "samples": [
+                        "first",
+                        "first mode",
+                        "Guess my number"
+                    ]
+                },
+                {
+                    "name": "GetRangeIntent",
+                    "slots": [
+                        {
+                            "name": "min",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "max",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "from {min} to {max} ",
+                        "{min} to {max}"
+                    ]
+                },
+                {
+                    "name": "GetAttemptsIntent",
+                    "slots": [
+                        {
+                            "name": "attempts",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{attempts} attempts"
                     ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetLowerIntent",
+                    "slots": [],
+                    "samples": [
+                        "low",
+                        "lower"
+                    ]
+                },
+                {
+                    "name": "GetHigherIntent",
+                    "slots": [],
+                    "samples": [
+                        "higher"
+                    ]
+                },
+                {
+                    "name": "GetUserGuessIntent",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "your thinking of {number}",
+                        "i guess {number}"
+                    ]
+                },
+                {
+                    "name": "BeginGameIntent",
+                    "slots": [],
+                    "samples": [
+                        "a"
+                    ]
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
                     "samples": []
                 }
             ],
             "types": []
         }
     }
-  }
-  
+}
