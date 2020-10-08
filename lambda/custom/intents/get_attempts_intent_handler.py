@@ -5,7 +5,7 @@ from utils.say import say
 from utils.common import (set_next_intent, is_next_intent_error, 
                          handle_next_intent_error, set_prev_msg)
 
-from constants.intents import (GET_ATTEMPTS_INTENT,
+from constants.intents import (GET_ATTEMPTS_INTENT, GET_NUMBER_INTENT,
                                GET_RANGE_INTENT)
 
 class GetAttemptsIntentHandler(AbstractRequestHandler):
@@ -22,7 +22,7 @@ class GetAttemptsIntentHandler(AbstractRequestHandler):
             return handle_next_intent_error(handler_input = handler_input) 
 
         # Getting the attempts from the user.
-        attempts = handler_input.request_envelope.request.intent.slots["attempts"].value
+        attempts = handler_input.request_envelope.request.intent.slots['attempts'].value
 
          # Validing the attempts the user gives.
         if not attempts or attempts == '0':
