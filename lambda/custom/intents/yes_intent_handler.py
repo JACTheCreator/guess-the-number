@@ -14,7 +14,7 @@ from constants.game_state import GAME_IN_PROGRESS, GAME_RESTARTED
 from constants.intents import (AMAZON_YES_INTENT, AMAZON_NO_INTENT,
                                GET_LOWER_INTENT, GET_HIGHER_INTENT,
                                GET_RANGE_INTENT, GET_NUMBER_INTENT,
-                               GET_USER_GUESS_INTENT)
+                               GET_USER_GUESS_INTENT, GET_GUESS_MY_NUMBER_INTENT)
 	                          
 class YesIntentHandler(AbstractRequestHandler):
     """Handler for Yes Intent."""
@@ -34,13 +34,14 @@ class YesIntentHandler(AbstractRequestHandler):
 
         is_prev_low_high_intent = is_prev_intent(handler_input, intents = [GET_LOWER_INTENT, GET_HIGHER_INTENT])
         is_prev_range_intent = is_prev_intent(handler_input, intents = [GET_RANGE_INTENT])
+        is_guess_my_number_intent = is_prev_intent(handler_input, intents = [GET_GUESS_MY_NUMBER_INTENT])
         is_prev_yes_no_intent = is_prev_intent(handler_input, intents = [AMAZON_YES_INTENT, AMAZON_NO_INTENT])
         is_prev_number_intent = is_prev_intent(handler_input, intents = [GET_NUMBER_INTENT])
         is_prev_user_guess_number_intent = is_prev_intent(handler_input, intents = [GET_USER_GUESS_INTENT, GET_NUMBER_INTENT])
 
         should_game_restart = is_current_game_state(handler_input, state = GAME_RESTARTED) and is_prev_yes_no_intent
 
-        if (is_prev_low_high_intent or is_prev_range_intent or should_game_restart):
+        if (is_prev_low_high_intent or is_guess_my_number_intent or should_game_restart):
             # Setting the next intent.
             set_next_intent(handler_input = handler_input, 
                             next_intent = [AMAZON_YES_INTENT, AMAZON_NO_INTENT])
@@ -52,16 +53,16 @@ class YesIntentHandler(AbstractRequestHandler):
             return handler_input.response_builder.response 
 
         elif is_prev_yes_no_intent or is_prev_number_intent or is_prev_user_guess_number_intent:
-            min = session_attr["min"]
-            max = session_attr["max"]
+            min = session_attr['min']
+            max = session_attr['max']
             attempts = session_attr['attempts'] = session_attr['max_attempts'] 
             set_game_state(handler_input, state = GAME_RESTARTED)
 
-            if session_attr["mode"] == GUESS_ALEXA_NUMBER:
+            if session_attr['mode'] == GUESS_ALEXA_NUMBER:
                 # Setting the next intent.
                 set_next_intent(handler_input = handler_input, 
                                 next_intent = [GET_USER_GUESS_INTENT, GET_NUMBER_INTENT])
-                session_attr["alexa_number"] = randint(int(min), int(max))
+                session_attr['alexa_number'] = randint(int(min), int(max))
                 
                 speech_text = say.guessalexanumber(min = min, max = max, attempts = attempts)
                 reprompt_text = say.didnothear() + speech_text
@@ -69,7 +70,7 @@ class YesIntentHandler(AbstractRequestHandler):
                 handler_input.response_builder.speak(speech_text).ask(reprompt_text).set_should_end_session(False)
                 return handler_input.response_builder.response
 
-            if session_attr["mode"] == GUESS_MY_NUMBER:
+            if session_attr['mode'] == GUESS_MY_NUMBER:
                 # Setting the next intent.
                 set_next_intent(handler_input = handler_input, 
                                 next_intent = [AMAZON_YES_INTENT, AMAZON_NO_INTENT])         
